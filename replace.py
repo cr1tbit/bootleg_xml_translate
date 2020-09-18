@@ -1,5 +1,5 @@
 import re
-import sys
+import sys,os
 
 '''
 THIS IS FUN
@@ -10,14 +10,18 @@ cat * | sed 's/./&\n/g' | LC_COLLATE=C sort -u | tr -d '\n'
  哲回固土基塔壮孜安家尔尼山巴布彝德怒拉撒文斡斯族日昂昌春
  普景朗朝本柯毛民水汉温满独珞瑶畲白祜简米繁纳维罗羌苗萨蒙
  藏裕西語诺赫达鄂锡门阿颇體高鲜黎龙국어한！，：？%
-''''
+'''
 
 def translate_text(text:str)->str:
-    return text
+    stream = os.popen(f'trans -brief :pl "{text}"')
+    return stream.read().rstrip()
+
+def just_text(text:str)->str:
+    return f'**{text}**'
 
 def group_operation(match:re.match) ->str:
     group = match.group(1)
-    return ">*" + translate_text(group) + "*<\\"
+    return ">" + translate_text(group) + "<\\"
 
 return_str = ""
 
